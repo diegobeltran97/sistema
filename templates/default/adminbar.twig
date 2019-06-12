@@ -1,0 +1,27 @@
+<div id="adminbar-container">
+    <a href="{{ site_url }}wells.php">
+    <img src="{{ template_url }}/images/logo.png" />
+</a>
+    <div id="adminbar" class="" role="navigation">
+
+        <ul class="top-left-bar">
+            <li>Sistema de Administraci&oacute;n de Pozos</li>
+        </ul>
+        <ul class="top-right-bar">
+            <li>
+                <div class="btn-group">
+                    <a href="#" data-toggle="dropdown">
+                        Hola, <span>{{ account.nombre|raw }}</span>
+                        <i class="icon fa fa-user"></i><span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="#" class="act-user-edit" data-userid="{{ account.user_id }}" data-access="false">Editar
+                                Cuenta</a></li>
+                        <li><a href="{{ site_url }}login.php?action=logout">Salir</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</div>

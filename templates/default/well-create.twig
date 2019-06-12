@@ -1,0 +1,199 @@
+{% include 'header.twig' %}
+
+{% include 'mainmenu.twig' %}
+
+<div id="content" xmlns="http://www.w3.org/1999/html">
+    <div id="content-body">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                {% if not edit_mode %}
+                    <h1 class="page-header"><i class="icon fa fa-tint"></i> Nuevo Pozo</h1>
+                {% else %}
+                    <h1 class="page-header"><i class="icon fa fa-edit"></i> Editar Pozo</h1>
+                {% endif %}
+
+                {{ msg|raw }}
+
+                {% if show_form and (not edit_mode or well_info) %}
+                    <form class="form-horizontal">
+
+                        <h3>Datos Básicos</h3>
+
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label for="cliente" class="control-label">Cliente</label>
+                                <select name="cliente" class="form-control"
+                                        id="cliente"{% if edit_mode %} disabled {% endif %}>
+                                    <option value="">Seleccione un Cliente...</option>
+                                    {% for cliente in customer_list %}
+                                        <option value="{{ cliente.cliente_id }}"{% if well_info.cliente_id == cliente.cliente_id %} selected {% endif %}>{{ cliente.razon_social|raw }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="sede"
+                                       class="control-label"{% if edit_mode %} disabled {% endif %}>Sede</label>
+                                <select name="sede" class="form-control" id="sede" disabled>
+                                    <option value="">Seleccione una Sede...</option>
+                                    {% for sede in sede_list %}
+                                        <option value="{{ sede.sede_id }}"{% if well_info.sede_id == sede.sede_id %} selected {% endif %}>{{ sede.nombre|raw }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+
+                            <div class="col-sm-6">
+                                <label for="nombre" class="control-label">Nombre de Pozo</label>
+                                <input type="text" name="nombre" class="form-control" value="{{ well_info.nombre }}"
+                                       id="nombre"/>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="fecha_construccion" class="control-label">Fecha de Construcción</label>
+                                <input type="text" name="fecha_construccion" class="form-control date"
+                                       value="{{ well_info.fecha_construccion }}" id="fecha_construccion"/>
+                            </div>
+                        </div>
+
+
+                        <h3>Ubicación</h3>
+
+                        <div class="form-group">
+
+
+                            <div class="col-sm-6">
+                                <label for="estado" class="control-label">Estado</label>
+                                <select name="estado" class="form-control" id="estado">
+                                    {% for estado in estados_list %}
+                                        <option value="{{ estado.value }}"{% if well_info.estado == estado.value %} selected {% endif %}>{{ estado.text|raw }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="municipio" class="control-label">Municipio</label>
+                                <select name="municipio" class="form-control" id="municipio">
+                                    {% for municipio in municipios_list %}
+                                        <option value="{{ municipio.value }}"{% if well_info.municipio == municipio.value %} selected {% endif %}>{{ municipio.text|raw }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+
+                            <div class="col-sm-6">
+                                <label for="ciudad" class="control-label">Ciudad</label>
+                                <select name="ciudad" class="form-control" id="ciudad">
+                                    {% for ciudad in ciudades_list %}
+                                        <option value="{{ ciudad.value }}"{% if well_info.ciudad == ciudad.value %} selected {% endif %}>{{ ciudad.text|raw }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="coord_n" class="control-label">Coordenada N</label>
+                                <input type="text" name="coord_n" class="form-control" value="{{ well_info.coord_n }}"
+                                       id="coord_n" placeholder="ejemplo: 12.345678"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label for="coord_e" class="control-label">Coordenada E</label>
+                                <input type="text" name="coord_e" class="form-control" value="{{ well_info.coord_e }}"
+                                       id="coord_e" placeholder="ejemplo: -12.345678"/>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="por_parko" class="control-label">Construido por Parko</label>
+                                <select name="por_parko" id="por_parko" class="form-control select-default">
+                                    <option value="">Seleccione..</option>
+                                    <option value="1"{% if well_info.por_parko == "1" %} selected {% endif %}>SI</option>
+                                    <option value="0"{% if well_info.por_parko == "0" %} selected {% endif %}>NO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="direccion" class="control-label">Dirección</label>
+                                <textarea name="direccion" class="form-control"
+                                          id="direccion">{{ well_info.direccion }}</textarea>
+                            </div>
+                        </div>
+
+
+                        <h3>Características</h3>
+
+                        <div class="form-group">
+
+                            <div class="col-sm-6">
+                                <label for="diametro" class="control-label">Diámetro (pulg)</label>
+                                <input type="text" name="diametro" class="form-control" value="{{ well_info.diametro }}"
+                                       id="diametro"/>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="profundidad" class="control-label">Profundidad (m)</label>
+                                <input type="text" name="profundidad" class="form-control"
+                                       value="{{ well_info.profundidad }}" id="profundidad"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-sm-6">
+                                <label for="material" class="control-label">Material</label>
+                                <select name="material" class="form-control select-default" id="material"
+                                        data-input-value="{{ well_info.material }}">
+                                    <option value="">Seleccione un Material...</option>
+                                    {% for material in material_list %}
+                                        <option value="{{ material.value }}"{% if well_info.material == material.value %} selected {% endif %}>{{ material.text|raw }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="descripcion" class="control-label">Descripción y/o Detalles</label>
+                                <textarea name="descripcion" class="form-control"
+                                          id="descripcion">{{ well_info.descripcion }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-12 text-center">
+                                <button type="button" onclick="history.back()" class="btn btn-default btn-action"><i
+                                            class="fa fa-arrow-left"></i>
+                                    Volver Atr&aacute;s
+                                </button>
+                                {% if not edit_mode %}
+                                    <button name="act-create-well" class="btn btn-primary btn-action"
+                                            id="act-create-well"><i class="fa fa-share-square-o"></i> Registrar Pozo
+                                    </button>
+                                {% else %}
+                                    <button name="act-edit-well" class="btn btn-primary" id="act-edit-well"
+                                            data-wellid="{{ well_info.pozo_id }}"><i class="fa fa-share-square-o"></i>
+                                        Guardar Cambios
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+{% include 'footer.twig' %}

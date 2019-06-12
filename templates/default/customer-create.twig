@@ -1,0 +1,87 @@
+{% include 'header.twig' %}
+
+{% include 'mainmenu.twig' %}
+
+<div id="content">
+    <div id="content-body">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h1 class="page-header"><i class="icon fa fa-file"></i> Nuevo Cliente</h1>
+
+
+                <form class="form-horizontal">
+
+                    <h3>Datos Básicos</h3>
+
+                    <div class="form-group">
+
+                        <div class="col-sm-6">
+                            <label for="razon_social" class="control-label">Razón Social</label>
+                            <input type="text" name="razon_social" class="form-control" value="" id="razon_social" placeholder="Nombre del Cliente"/>
+                        </div>
+                    </div>
+
+<br />
+                    <h3>Sedes</h3>
+                    <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="sedes list-group">
+                            <div class="sede-info list-group-item">
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label class="control-label">Nombre de la Sede:</label>
+                                        <input type="text" name="sede_nombre[]" class="form-control" placeholder="Nombre de la Sede"/>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Info:</label>
+                                        <input type="text" name="sede_info[]" class="form-control" placeholder="Información / Descripción de la Sede"/>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <a href="#" class="quitar-sede btn btn-default btn-sm" title="Remover Sede"
+                                           style="margin-top: 30px;" data-toggle="tooltip">
+                                            <i class="glyphicon glyphicon-remove"></i>
+                                        </a>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+
+                            <a href="#" class="btn btn-default btn-xs agregar-sede pull-right"><i class="glyphicon glyphicon-plus"></i>
+                                Agregar Sede
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12 text-center">
+
+                            <button type="button" onclick="history.back()" class="btn btn-default btn-action"><i class="fa fa-arrow-left"></i>
+                                Volver Atr&aacute;s
+                            </button>
+                            <button name="act-create-customer" class="btn btn-primary btn-action"
+                                    id="act-create-customer"><i class="fa fa-share-square-o"></i> Registrar Cliente
+                            </button>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+{% include 'footer.twig' %}

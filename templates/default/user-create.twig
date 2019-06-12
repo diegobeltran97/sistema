@@ -1,0 +1,147 @@
+{% include 'header.twig' %}
+
+{% include 'mainmenu.twig' %}
+
+<div id="content">
+    <div id="content-body">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h1 class="page-header"><i class="icon fa fa-user"></i> Crear Usuario</h1>
+                {{ msg|raw }}
+
+                {% if show_form %}
+                    <form class="form-horizontal" autocomplete="off">
+
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label for="user_firstname" class="control-label">Nombre</label>
+                                <input type="text" name="user_firstname" class="form-control" value=""
+                                       id="user_firstname"
+                                       placeholder="Nombre"/>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="user_lastname" class="control-label">Apellidos</label>
+                                <input type="text" name="user_lastname" class="form-control" value="" id="user_lastname"
+                                       placeholder="Apellidos"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-6">
+
+                                <label for="user_ci" class="control-label">Cédula de Identidad</label>
+
+                                <div class="input-group">
+                                    <select name="nacionalidad" class="select1">
+                                        <option value="V">V</option>
+                                        <option value="E">E</option>
+                                    </select>
+                                    <input type="text" name="user_ci" class="form-control numeric-int" maxlength="8"
+                                           placeholder="000000000" id="user_ci"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="user_email" class="control-label">Correo Electrónico</label>
+                                <input type="text" name="user_email" class="form-control"
+                                       placeholder="correo@ejemplo.com"
+                                       id="user_email"
+                                       autocomplete="off"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label for="pregunta_seguridad" class="control-label">Pregunta de Seguridad</label>
+                                <input type="text" name="pregunta_seguridad" class="form-control"
+                                       placeholder="Pregunta de Seguridad"
+                                       id="pregunta_seguridad"/>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="respuesta_seguridad" class="control-label">Respuesta de Seguridad</label>
+                                <input type="text" name="respuesta_seguridad" class="form-control"
+                                       placeholder="Respuesta de Seguridad"
+                                       id="respuesta_seguridad"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label for="user_pass" class="control-label">Nueva Contraseña</label>
+                                <input type="password" name="user_pass" class="form-control" id="user_pass"
+                                       placeholder="Contraseña de Acceso"
+                                       autocomplete="off"/>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="user_re_pass" class="control-label">Repita Contraseña</label>
+                                <input type="password" name="user_re_pass" class="form-control" id="user_re_pass"
+                                       placeholder="Rep. Contraseña de Acceso"/>
+                            </div>
+                        </div>
+
+
+                        <h3>Permisos de Usuario</h3>
+
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <table class="table">
+                                    <tr>
+                                        <th width="40%"></th>
+                                        <th width="15%">
+                                            <a id="v_user_access" href="#"><input type="hidden"/>Ver</a></th>
+                                        <th width="15%">
+                                            <a id="c_user_access" href="#"><input type="hidden"/>Crear</a></th>
+                                        <th width="15%">
+                                            <a id="m_user_access" href="#"><input type="hidden"/>Modificar</a></th>
+                                        <th width="15%">
+                                            <a id="e_user_access" href="#"><input type="hidden"/>Eliminar</a></th>
+                                    </tr>
+
+                                    {% for n, access in user_access_list %}
+                                        <tr>
+                                            <td>
+                                                {{ access|raw }}
+                                            </td>
+                                            <td>
+                                                <input name="user_access[]" id="user_access-{{ n }}-1" type="checkbox"
+                                                       value="{{ n }}-1" title="Ver"/>
+                                            </td>
+                                            <td>
+                                                <input name="user_access[]" id="user_access-{{ n }}-2" type="checkbox"
+                                                       value="{{ n }}-2" title="Crear"/>
+                                            </td>
+                                            <td>
+                                                <input name="user_access[]" id="user_access-{{ n }}-3" type="checkbox"
+                                                       value="{{ n }}-3" title="Modificar"/>
+                                            </td>
+                                            <td>
+                                                <input name="user_access[]" id="user_access-{{ n }}-4" type="checkbox"
+                                                       value="{{ n }}-4" title="Eliminar"/>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-12 text-center">
+
+                                <button type="button" onclick="history.back()" class="btn btn-default btn-action"><i class="fa fa-arrow-left"></i>
+                                    Volver Atr&aacute;s
+                                </button>
+                                <button name="act-create-user" class="btn btn-primary btn-action" id="act-create-user">
+                                    <i
+                                            class="fa fa-share-square-o"></i> Registrar Usuario
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+{% include 'footer.twig' %}

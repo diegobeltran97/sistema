@@ -1,0 +1,128 @@
+{% include 'header.twig' %}
+
+{% include 'mainmenu.twig' %}
+
+<div id="content">
+    <div id="content-body">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <h1 class="page-header"><i class="icon fa fa-list-alt"></i> Listado de Clientes</h1>
+
+
+
+                {{ msg|raw }}
+
+                {% if show_form %}
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <form method="get" class="form-horizontal">
+
+                            <div class="input-group">
+                                <!-- /btn-group -->
+                                <input name="s" type="text" class="form-control customer-search ui-autocomplete-input"
+                                       placeholder="Ingrese el texto a buscar..." value="{{ search_string|raw }}"/>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" id="act-search-well"><span
+                                                class="glyphicon glyphicon-search"></span>
+                                        Buscar
+                                    </button>
+                                 </span>
+                            </div>
+                            <!-- /input-group -->
+                        </form>
+                    </div>
+                </div>
+                <br/>
+
+                {% if customer_list %}
+
+                    <div class="row">
+
+                        <div class="col-sm-7">
+                            <ul class="pagination">
+                                <li{% if pagination.current == 1 %} class="disabled"{% endif %}>
+                                    <a href="{{ pagination.previous_url }}">&laquo;</a>
+                                </li>
+                                {% for i in pagination.first..pagination.last %}
+                                    <li{% if i == pagination.current %} class="active"{% endif %}>
+                                        <a href="{{ pagination.url }}{{ i }}">{{ i }}</a>
+                                    </li>
+                                {% endfor %}
+                                <li{% if pagination.current == pagination.total %} class="disabled"{% endif %}>
+                                    <a href="{{ pagination.next_url }}">&raquo;</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-sm-5 text-right">
+                            <p class="pagination">Mostrando {{ first_item }} - {{ last_item }} de {{ total_items }}
+                                registros.</p>
+                        </div>
+
+                    </div>
+
+
+                    <table class="table1">
+                        <tr>
+                            <th width="7%">Id</th>
+                            <th width="54%">Razón Social</th>
+                            <th width="30%">Cant. de Pozos / Trabajos Realizados</th>
+                            <th width="9%">Opciones</th>
+                        </tr>
+
+                        {% for customer in customer_list %}
+                            <tr>
+                                <td>{{ customer.cliente_id }}</td>
+                                <td>{{ customer.razon_social|raw }}</td>
+                                <td>{{ customer.pozos_realizados }}
+                                    Pozo{% if customer.pozos_realizados != 1 %}s{% endif %}
+                                     / {{ customer.trabajos_realizados }} Trabajo{% if customer.trabajos_realizados != 1 %}s{% endif %}</td>
+                                <td>   <a href="{{ site_url }}customers.php?action=edit&id={{ customer.cliente_id }}" class="btn btn-primary btn-list" data-toggle="tooltip" title="Ver Detalles / Modificar" {% if '2-3' not in current_userinfo.access %} disabled {% endif %}><i class="fa fa-file-text"></i></a>
+
+                                    <a class="btn btn-danger btn-list act-delete-customer" data-toggle="tooltip" data-customerid="{{ customer.cliente_id }}"  title="Eliminar" {% if '2-4' not in current_userinfo.access %} disabled {% endif %}><i class="fa fa-trash-o"></i></a>
+</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </table>
+
+                    <div class="row">
+
+
+                        <div class="col-sm-5">
+                            <p class="pagination">Mostrando {{ first_item }} - {{ last_item }} de {{ total_items }}
+                                registros.</p>
+                        </div>
+
+                        <div class="col-sm-7 text-right">
+                            <ul class="pagination">
+                                <li{% if pagination.current == 1 %} class="disabled"{% endif %}>
+                                    <a href="{{ pagination.previous_url }}">&laquo;</a>
+                                </li>
+                                {% for i in pagination.first..pagination.last %}
+                                    <li{% if i == pagination.current %} class="active"{% endif %}>
+                                        <a href="{{ pagination.url }}{{ i }}">{{ i }}</a>
+                                    </li>
+                                {% endfor %}
+                                <li{% if pagination.current == pagination.total %} class="disabled"{% endif %}>
+                                    <a href="{{ pagination.next_url }}">&raquo;</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+{% include 'footer.twig' %}

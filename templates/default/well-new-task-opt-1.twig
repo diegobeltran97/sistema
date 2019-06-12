@@ -1,0 +1,25 @@
+<div class="form-group">
+    <div class="col-sm-4">
+        <label for="metodo_usado" class="control-label">Método Usado</label><br/>
+        <label class="checkbox-inline"><input type="checkbox" name="metodo_usado[]" value="1" {% if 1 in limpieza_pozo.metodo_usado %} checked {% endif %}/> Compresor</label>
+        <label class="checkbox-inline"><input type="checkbox" name="metodo_usado[]" value="2" {% if 2 in limpieza_pozo.metodo_usado %} checked {% endif %}/> Bomba</label>
+    </div>
+</div>
+
+<div class="form-group">
+
+    <div class="col-sm-4">
+        <label for="nivel_bombeo" class="control-label">Nivel de Bombeo (m)</label>
+        <input type="text" name="nivel_bombeo" class="form-control" id="nivel_bombeo" value="{{ limpieza_pozo.nivel_bombeo }}"/>
+    </div>
+
+    <div class="col-sm-4">
+        <label for="profundidad_final" class="control-label">Profundidad Final (m)</label>
+        <input type="text" name="profundidad_final" class="form-control" id="profundidad_final" value="{{ limpieza_pozo.profundidad_final }}"/>
+    </div>
+
+    <div class="col-sm-4">
+        <label for="caudal" class="control-label">Caudal Limpieza (l/s)</label>
+        <input type="text" name="caudal" class="form-control" id="caudal" value="{{ task_info.limpieza_pozo.caudal }}"/>
+    </div>
+</div>

@@ -1,0 +1,178 @@
+{% include 'header.twig' %}
+
+{% include 'mainmenu.twig' %}
+
+<div id="content">
+    <div id="content-body">
+
+        <div class="panel panel-default well-details">
+            <div class="panel-body">
+
+                {% if show_well and well_info %}
+
+                    <div class="pull-right" style="margin-top: 20px">
+                        <div class="btn-group action-group">
+                            {% if '0-3' in current_userinfo.access %}
+                                <a class="btn btn-default"
+                                   href="{{ site_url }}wells.php?action=edit&id={{ well_info.pozo_id }}"
+                                   data-toggle="tooltip"
+                                   title="Editar Pozo"><i class="fa fa-pencil-square-o"></i></a>
+                            {% endif %}
+
+                            {% if '0-4' in current_userinfo.access %}
+                                <a class="btn btn-default act-delete-well" data-toggle="tooltip"
+                                   data-wellid="{{ well_info.pozo_id }}"
+                                   title="Eliminar Pozo"><i class="fa fa-trash-o"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                {% endif %}
+
+                <h1 class="page-header"><i class="icon fa fa-tint"></i> Detalles del Pozo </h1>
+
+                {% if show_well and well_info %}
+
+                    <div class="row">
+                        <div class="col-sm-5">
+
+                            <p class="side-padding customer-name"><strong>Cliente:</strong> <a
+                                        href="{{ site_url }}customers.php?action=edit&id={{ well_info.cliente_id }}">{{ well_info.cliente|raw }}</a>
+                            </p>
+
+                            <p class="side-padding headquarter-name"><strong>Sede:</strong> <a
+                                        href="{{ site_url }}wells.php?action=search&mode=5&s={{ well_info.sede_id }}">{{ well_info.nombre_sede|raw }}</a>
+                            </p>
+
+                            {% if customer_names %}
+                                <p class="side-padding"><strong>Nombres Previos del Cliente:</strong>
+                                    {{ customer_names|raw }}
+                                </p>
+                            {% endif %}
+
+                            <p class="side-padding"><strong>Nombre del Pozo:</strong> {{ well_info.nombre|raw }}</p>
+
+                            <p class="side-padding"><strong>Fecha de
+                                    Construcción:</strong> {{ well_info.fecha_construccion }}</p>
+                            <p class="side-padding"><strong>Construido por
+                                    Parko:</strong> {% if well_info.por_parko == "1" %}SI{% elseif well_info.por_parko == "0" %}NO{% else %}{% endif %}</p>
+                        </div>
+
+                        <div class="col-sm-7">
+
+
+                            <p class="side-padding"><strong>Dirección:</strong> {{ well_info.direccion|raw }}</p>
+                            <p class="pull-left side-padding"><strong>Estado:</strong> {{ well_info.nombre_estado|raw }}
+                            </p>
+
+                            <p class="pull-left side-padding">
+                                <strong>Municipio:</strong> {{ well_info.nombre_municipio|raw }}</p>
+
+                            <p class="side-padding"><strong>Ciudad:</strong> {{ well_info.nombre_ciudad|raw }}</p>
+
+                            <p class="pull-left side-padding"><strong>Coord. N:</strong> {{ well_info.coord_n }}</p>
+
+                            <p class="side-padding"><strong>Coord. E:</strong> {{ well_info.coord_e }}</p>
+
+                            <p class="pull-left side-padding"><strong>Diametro:</strong> {{ well_info.diametro }}”</p>
+
+                            <p class="pull-left side-padding"><strong>Profundidad:</strong> {{ well_info.profundidad }}m
+                            </p>
+
+                            <p class="side-padding"><strong>Material:</strong> {{ well_info.material|raw }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="side-padding"><strong>Descripción y/o
+                                    Detalles:</strong> {{ well_info.descripcion|raw }}
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+                    {{ msg|raw }}
+                {% endif %}
+
+            </div>
+        </div>
+        {% if show_task and well_info %}
+            <div class="panel panel-default well-task-details">
+                <div class="panel-body">
+
+                    <div class="pull-right" style="margin-top: 20px">
+                        <div class="btn-group action-group">
+                            {% if '1-2' in current_userinfo.access %}
+                                <a class="btn btn-default"
+                                   href="{{ site_url }}wells.php?action=new_task&well={{ well_info.pozo_id }}"
+                                   data-toggle="tooltip"
+                                   title="Nuevo Trabajo" {% if '2-2' not in current_userinfo.access %} disabled {% endif %}><i
+                                            class="fa fa-plus-circle"></i></a>
+                            {% endif %}
+                            {% if '1-3' in current_userinfo.access and task_list|length > 0 %}
+                                <a class="btn btn-default" id="act-go-edit-task"
+                                   href="{{ site_url }}wells.php?action=edit_task"
+                                   data-toggle="tooltip" title="Editar Trabajo Actual"><i
+                                            class="fa fa-pencil-square-o"></i></a>
+                            {% endif %}
+
+                            {% if task_list|length > 0 %}
+                                <a class="btn btn-default"
+                                   href="{{ site_url }}wells.php?action=print_task" id="act-go-print-task"
+                                   data-toggle="tooltip" title="Versión Impresa" target="_blank"><i
+                                            class="fa fa-print"></i></a>
+                            {% endif %}
+
+                            {% if '1-4' in current_userinfo.access and task_list|length > 0 %}
+                                <a class="btn btn-default act-delete-task" data-toggle="tooltip"
+                                   id="act-go-delete-task"
+                                   data-taskid=""
+                                   title="Eliminar Trabajo Actual"><i
+                                            class="fa fa-trash-o"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <h2 class="page-header">Trabajos Realizados</h2>
+
+                    {% if task_list|length > 0 %}
+                        <!-- Nav tabs -->
+                        <div class="scrollable-tabs">
+                            <ul class="nav nav-tabs">
+                                {% for task in task_list %}
+                                    <li class="{% if task.trabajo_id == default_task %} active{% endif %}{% if task.status == 0 %} in_process{% endif %}">
+                                        <a href="#{{ task.trabajo_id }}" data-toggle="tab">{{ task.trabajo_id }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+
+                            {% for task in task_list %}
+                                <div class="tab-pane panel {% if task.trabajo_id == default_task %} active {% endif %}"
+                                     id="{{ task.trabajo_id }}">
+
+                                    <div class="panel-body well-task-details-tabcontent" style="background: #eeeeee">
+                                        {% include 'well-details-task.twig' %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+
+                        <div class="alert alert-warning">Actualmente no se ha realizado ningún trabajo en este pozo.
+                        </div>
+
+
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="clear"></div>
+</div>
+
+{% include 'footer.twig' %}

@@ -1,0 +1,85 @@
+{% include 'header.twig' %}
+
+<div id="login-content">
+
+    <div id="logo-container">
+        <img src="{{ template_url }}/images/logo.png"/>
+    </div>
+
+    <div class="panel panel-default loginContainer">
+        <div class="panel-body">
+            <form id="loginForm" method="post" autocomplete="on">
+
+                <h1 class="page-header"><i class="icon fa fa-lock"></i> Inicie sesión</h1>
+
+                {{ msg|raw }}
+
+                <div class="form-group">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <div class="input-group">
+                                <select name="nacionalidad" class="select1">
+                                    <option value="V">V</option>
+                                    <option value="E">E</option>
+                                </select>
+                                <input type="text" name="cedula" class="form-control numeric-int" id="cedula"
+                                       maxlength="8" autocomplete="on"
+                                       placeholder="Cédula de Identidad">
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <input type="text" name="correo" class="form-control" id="correo" placeholder="Correo Electrónico"
+                           autocomplete="on">
+
+                </div>
+
+                <div class="form-group">
+                    <input type="password" name="clave" class="form-control" id="clave" placeholder="Contraseña">
+
+                </div>
+
+                <div class="form-group">
+                    <div class="captcha-container">
+                        <img id="siimage"
+                             src="{{ site_url }}includes/captcha.php?sid={{ rand_id }}"
+                             alt="Imagen CAPTCHA" class="img-responsive thumbnail"/>
+                        <a class="captcha_refresh" tabindex="-1" style="border-style: none; outline: none;" href="#"
+                           title="Refrescar Codigo"
+                           onclick="document.getElementById('siimage').src = '{{ site_url }}includes/captcha.php?sid=' + Math.random(); this.blur(); return false">
+                            <img src="{{ template_url }}/images/refresh_captcha.png" alt="Refrescar Codigo"
+                                 onclick="this.blur()" border="0"/>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p class="captcha-text">Ingrese el c&oacute;digo de seguridad de la imagen superior:</p>
+                    <input type="text" name="ct_captcha" class="form-control" placeholder="Código de Seguridad">
+
+                </div>
+
+                <div class="form-group">
+
+                    <button type="submit" name="act-login" class="btn btn-default btn-block"
+                            id="act-login"><i class="glyphicon glyphicon-log-in"></i> Ingresar
+                    </button>
+                </div>
+
+                <a href="{{ site_url }}login.php?action=reset_password">&iquest;No puedes acceder a tu cuenta?</a>
+
+            </form>
+        </div>
+
+    </div>
+
+    {% include 'footer.twig' %}
+</div>

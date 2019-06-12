@@ -1,0 +1,373 @@
+﻿{% include 'header.twig' %}
+
+{% include 'mainmenu.twig' %}
+
+<div id="content">
+<div id="content-body">
+<div class="panel panel-default">
+<div class="panel-body">
+<h1 class="page-header"><i class="icon fa fa-search"></i> Buscar Pozos</h1>
+
+<form class="form-horizontal" method="get">
+<input type="hidden" name="action" value="search"/>
+
+<div class="form-group">
+
+    <div class="col-sm-11">
+
+        <div class="input-group">
+            <select class="select1" name="mode" data-divider="3">
+                {% for searchmode in searchmode_list %}
+                    <option value="{{ searchmode.value }}"{{ searchmode.selected }}>{{ searchmode.text|raw }}</option>
+                {% endfor %}
+            </select>
+            <!-- /btn-group -->
+            <input name="s" type="text" class="form-control well-search ui-autocomplete-input"
+                   placeholder="Ingrese el texto a buscar..." value="{{ search_string|raw }}"/>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" id="act-search-well"><span
+                                                class="glyphicon glyphicon-search"></span>
+                                        Buscar
+                                    </button>
+                                 </span>
+        </div>
+        <!-- /input-group -->
+
+    </div>
+
+</div>
+
+
+<div class="col-sm-12">
+    <div class="search-filter-bar"><h4 class="pull-left">Filtros:</h4>
+
+        <div class="btn-group search-filter">
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button"
+                    data-toggle="dropdown">
+                <span class="text">Ubicación</span><span class="value"></span> <span
+                        class="caret"></span>
+            </button>
+            <ul class="dropdown-menu fixed">
+                <li>
+                    <label for="estado">Estado</label>
+                    <select id="estado" name="estado" class="form-control">
+                        {% for estado in estados_list %}
+                            <option value="{{ estado.value }}" {{ estado.selected }}>{{ estado.text|raw }}</option>
+                        {% endfor %}
+                    </select>
+
+                </li>
+                <li>
+                    <label for="municipio">Municipio</label>
+                    <select id="municipio" name="municipio"
+                            class="form-control" {% if municipios_list|length < 2 %} disabled {% endif %}>
+                        {% for municipio in municipios_list %}
+                            <option value="{{ municipio.value }}" {{ municipio.selected }}>{{ municipio.text|raw }}</option>
+                        {% endfor %}
+                    </select>
+
+                </li>
+                <li>
+                    <label for="ciudad">Ciudad</label>
+                    <select id="ciudad" name="ciudad"
+                            class="form-control" {% if ciudades_list|length < 2 %} disabled {% endif %}>
+                        {% for ciudad in ciudades_list %}
+                            <option value="{{ ciudad.value }}" {{ ciudad.selected }}>{{ ciudad.text|raw }}</option>
+                        {% endfor %}
+                    </select>
+
+                </li>
+                <li>
+                    <div class="col-xs-6" style="padding: 0 4px 6px 0">
+                        <button class="btn btn-danger btn-block btn-cancel"><span
+                                    class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                    <div class="col-xs-6" style="padding: 0 0 6px 4px">
+                        <button class="btn btn-success btn-block btn-confirm"><span
+                                    class="glyphicon glyphicon-ok"></span></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="btn-group search-filter" data-interval="”" data-validate="number">
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button"
+                    data-toggle="dropdown">
+                <span class="text">Diametro</span><span class="value"></span> <span
+                        class="caret"></span>
+            </button>
+            <ul class="dropdown-menu fixed">
+                <li>
+                    <label>Diametro Min. (”)</label>
+                    <input name="diam_min" type="text" placeholder="0.00”"
+                           value="{{ _GET.diam_min }}"
+                           class="form-control numeric"/>
+                </li>
+                <li>
+                    <label>Diametro Max. (”)</label>
+                    <input name="diam_max" type="text" placeholder="0.00”"
+                           value="{{ _GET.diam_max }}"
+                           class="form-control numeric"/>
+                </li>
+                <li>
+                    <div class="col-xs-6" style="padding: 0 4px 6px 0">
+                        <button class="btn btn-danger btn-block btn-cancel"><span
+                                    class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                    <div class="col-xs-6" style="padding: 0 0 6px 4px">
+                        <button class="btn btn-success btn-block btn-confirm"><span
+                                    class="glyphicon glyphicon-ok"></span></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="btn-group search-filter" data-interval="m" data-validate="number">
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button"
+                    data-toggle="dropdown">
+                <span class="text">Profundidad</span><span class="value"></span> <span
+                        class="caret"></span>
+            </button>
+            <ul class="dropdown-menu fixed">
+                <li>
+                    <label>Profundidad Min. (m)</label>
+                    <input name="prof_min" type="text" value="{{ _GET.prof_min }}"
+                           placeholder="0.00m"
+                           class="form-control numeric"/>
+                </li>
+                <li>
+                    <label>Profundidad Max. (m)</label>
+                    <input name="prof_max" type="text" placeholder="0.00m"
+                           value="{{ _GET.prof_max }}" class="form-control numeric"/>
+                </li>
+                <li>
+                    <div class="col-xs-6" style="padding: 0 4px 6px 0">
+                        <button class="btn btn-danger btn-block btn-cancel"><span
+                                    class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                    <div class="col-xs-6" style="padding: 0 0 6px 4px">
+                        <button class="btn btn-success btn-block btn-confirm"><span
+                                    class="glyphicon glyphicon-ok"></span></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+      
+
+
+        <div class="btn-group search-filter" data-interval="" data-validate="date">
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button"
+                    data-toggle="dropdown">
+                <span class="text">Fecha de Construcción</span><span class="value"></span> <span
+                        class="caret"></span>
+            </button>
+            <ul class="dropdown-menu fixed">
+                <li>
+                    <label>Fecha Min.</label>
+                    <input name="fecha_min" type="text" placeholder="dd/mm/aaaa"
+                           value="{{ _GET.fecha_min }}"
+                           class="form-control date"/>
+                </li>
+                <li>
+                    <label>Fecha Max.</label>
+                    <input name="fecha_max" type="text" placeholder="dd/mm/aaaa"
+                           value="{{ _GET.fecha_max }}"
+                           class="form-control date"/>
+                </li>
+                <li>
+                    <div class="col-xs-6" style="padding: 0 4px 6px 0">
+                        <button class="btn btn-danger btn-block btn-cancel"><span
+                                    class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                    <div class="col-xs-6" style="padding: 0 0 6px 4px">
+                        <button class="btn btn-success btn-block btn-confirm"><span
+                                    class="glyphicon glyphicon-ok"></span></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        
+
+
+        <div class="btn-group search-filter" data-single="true">
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button"
+                    data-toggle="dropdown">
+                <span class="text">Status de Trabajos</span><span class="value"></span> <span
+                        class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu fixed">
+                <li>
+                    <input type="hidden" name="status_trabajos" value="{{ _GET.status_trabajos }}"/>
+                    <a href="">Sin Filtro</a></li>
+                <li><a href="En Proceso">Con trabajos "En Proceso"</a></li>
+                <li><a href="Finalizados">Con trabajos "Finalizados"</a></li>
+                <li>
+                    <div class="col-xs-6" style="padding: 0 4px 6px 0">
+                        <button class="btn btn-danger btn-block btn-cancel"><span
+                                    class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                    <div class="col-xs-6" style="padding: 0 0 6px 4px">
+                        <button class="btn btn-success btn-block btn-confirm"><span
+                                    class="glyphicon glyphicon-ok"></span></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        
+
+        <button class="btn btn-default btn-xs reset-search-filter" data-toggle="tooltip" title="Restablecer Filtros">
+            &nbsp;<i class="fa fa-refresh"></i>&nbsp;</button>
+
+        <div  class=" search-filter float-right" style="float:right;">
+            <button class="btn btn-default btn-xs d-block p-2 "  >
+            Mapa</button>
+            <button class="btn btn-default btn-xs d-block p-2  " >
+            Listas</button>
+        </div>
+       
+        
+    </div>
+     
+
+</div>
+
+</form>
+
+</div>
+</div>
+
+
+{% if show_form and search_results is defined %}
+    {% if search_results|length > 0 %}
+
+
+        <div class="row">
+            <div class="col-sm-7">
+                <ul class="pagination">
+                    <li{% if pagination.current == 1 %} class="disabled"{% endif %}>
+                        <a href="{{ pagination.previous_url }}">&laquo;</a>
+                    </li>
+                    {% for i in pagination.first..pagination.last %}
+                        <li{% if i == pagination.current %} class="active"{% endif %}>
+                            <a href="{{ pagination.url }}{{ i }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                    <li{% if pagination.current == pagination.total %} class="disabled"{% endif %}>
+                        <a href="{{ pagination.next_url }}">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-sm-5 text-right">
+                <p class="pagination">Mostrando {{ first_item }} - {{ last_item }} de {{ total_items }} registros.</p>
+            </div>
+
+        </div>
+
+
+        {% for well in search_results %}
+
+            <div class="panel panel-default search-result">
+                <div class="panel-body">
+
+                    <div class="col-sm-4">
+
+                        <p class="customer-name"><strong>Cliente:</strong> <a
+                                    href="{{ site_url }}customers.php?action=edit&id={{ well.cliente_id }}">{{ well.cliente|raw }}</a>
+                        </p>
+
+                        <p class="headquarter-name"><strong>Sede:</strong> <a
+                                    href="{{ site_url }}wells.php?action=search&mode=5&s={{ well.sede_id }}">{{ well.nombre_sede|raw }}</a>
+                        </p>
+
+                        {% if well.cliente_nombres %}
+                            <p><strong>Nombres Previos del Cliente:</strong>
+                                {{ well.cliente_nombres|raw }}
+                            </p>
+                        {% endif %}
+
+                        <p><strong>Nombre del Pozo:</strong> {{ well.nombre|raw }}</p>
+
+                    </div>
+
+                    <div class="col-sm-5">
+
+                        <p class="col-sm-12"><strong>Dirección:</strong> {{ well.direccion|raw }}</p>
+
+                        <p class="col-sm-6"><strong>Estado:</strong> {{ well.nombre_estado|raw }}</p>
+
+                        <p class="col-sm-6"><strong>Municipio:</strong> {{ well.nombre_municipio|raw }}</p>
+
+                        <p class="col-sm-6"><strong>Ciudad:</strong> {{ well.nombre_ciudad|raw }}</p>
+
+                        <p class="col-sm-6"><strong>Construido por Parko:</strong> {% if well_info.por_parko == "1" %}SI{% elseif well_info.por_parko == "0" %}NO{% else %}{% endif %}</p>
+
+                        <p class="col-sm-6"><strong>Coord. N:</strong> {{ well.coord_n|raw }}</p>
+
+                        <p class="col-sm-6"><strong>Coord. E:</strong> {{ well.coord_e }}</p>
+
+                        <p class="col-sm-6"><strong>Diametro:</strong> {{ well.diametro }}”</p>
+
+                        <p class="col-sm-6"><strong>Profundidad:</strong> {{ well.profundidad }}m</p>
+
+                        <p class="col-sm-12"><strong>Fecha de Construcción:</strong> {{ well.fecha_construccion }}</p>
+
+                        <p class="col-sm-12"><strong>Descripción y/o Detalles:</strong> {{ well.descripcion|raw }}</p>
+
+                    </div>
+
+                    <div class="col-sm-3" style="text-align: center; margin-top: 54px;">
+
+                        <a class="btn btn-primary btn-lg btn-details"
+                           href="{{ site_url }}wells.php?action=details&id={{ well.pozo_id }}"
+                           style="margin: 0 auto;">Ver Detalles</a>
+
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+
+
+        <div class="row">
+
+
+            <div class="col-sm-5">
+                <p class="pagination">Mostrando {{ first_item }} - {{ last_item }} de {{ total_items }} registros.</p>
+            </div>
+
+            <div class="col-sm-7 text-right">
+                <ul class="pagination">
+                    <li{% if pagination.current == 1 %} class="disabled"{% endif %}>
+                        <a href="{{ pagination.previous_url }}">&laquo;</a>
+                    </li>
+                    {% for i in pagination.first..pagination.last %}
+                        <li{% if i == pagination.current %} class="active"{% endif %}>
+                            <a href="{{ pagination.url }}{{ i }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                    <li{% if pagination.current == pagination.total %} class="disabled"{% endif %}>
+                        <a href="{{ pagination.next_url }}">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    {% else %}
+        {{ msg|raw }}
+    {% endif %}
+{% elseif not show_form %}
+    {{ msg|raw }}
+{% endif %}
+
+</div>
+
+<div class="clear"></div>
+</div>
+{% include 'footer.twig' %}

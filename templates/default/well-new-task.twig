@@ -1,0 +1,300 @@
+{% include 'header.twig' %}
+
+{% include 'mainmenu.twig' %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("form input, form select, form textarea").change(function () {
+            $(window).bind('beforeunload', function () {
+                return 'No se ha finalizado de guardar el trabajo';
+            });
+        });
+    });
+</script>
+
+<div id="content">
+    <div id="content-body">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                {% if not edit_mode %}
+                    <h1 class="page-header"><i class="fa fa-check-square-o"></i> Nuevo Trabajo</h1>
+                    {% set task_info =  task_info|merge({ 'fecha_trabajo': current_date }) %}
+                {% else %}
+                    <h1 class="page-header"><i class="fa fa-edit"></i> Editar Trabajo</h1>
+                {% endif %}
+
+                {{ msg|raw }}
+
+                {% if show_form and (not edit_mode or task_info) %}
+
+                    <div class="task-form">
+                        <h3>Datos Básicos</h3>
+
+                        <form class="form-horizontal">
+
+                            <div class="form-group">
+
+                                <div class="col-sm-6">
+                                    <label for="id_trabajo" class="control-label">Nro. del Trabajo</label>
+                                    <input type="text" name="id_trabajo" class="form-control" value="{{ task_id }}"
+                                           id="id_trabajo"{% if edit_mode %} disabled {% endif %}/>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="cliente" class="control-label">Cliente</label>
+                                    <select name="cliente" class="form-control"
+                                            id="cliente"{% if edit_mode %} disabled {% endif %}>
+                                        <option value="">Seleccione un Cliente...</option>
+                                        {% for cliente in customer_list %}
+                                            <option value="{{ cliente.cliente_id }}"{% if well_info.cliente_id == cliente.cliente_id %} selected {% endif %}>{{ cliente.razon_social|raw }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-6">
+                                    <label for="sede" class="control-label">Sede</label>
+                                    <select name="sede" class="form-control" id="sede">
+                                        <option value="">Seleccione una Sede...</option>
+                                        {% for sede in sede_list %}
+                                            <option value="{{ sede.value }}"{% if well_info.sede_id == sede.value %} selected{% endif %}>{{ sede.text|raw }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+
+                                <div class="col-sm-6">
+                                    <label for="pozo" class="control-label">Pozo</label>
+                                    <select name="pozo" class="form-control"
+                                            id="pozo"{% if well_list|length < 1 %} disabled {% endif %}>
+                                        <option value="">Seleccione un Pozo...</option>
+                                        {% for pozo in well_list %}
+                                            <option value="{{ pozo.pozo_id }}"{% if well_info.pozo_id == pozo.pozo_id %} selected{% endif %}>{{ pozo.nombre|raw }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-6">
+                                    <label for="fecha_trabajo" class="control-label">Fecha del Trabajo</label>
+                                    <input type="text" name="fecha_trabajo" class="form-control date"
+                                           value="{{ task_info.fecha_trabajo }}"
+                                           id="fecha_trabajo"/>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="realizado_por" class="control-label">Realizado por</label>
+                                    <input type="text" name="realizado_por" class="form-control"
+                                           value="{{ task_info.realizado_por }}"
+                                           id="realizado_por"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-6">
+                                    <label for="grua_usada" class="control-label">Grúa Usada</label>
+                                    <input type="text" name="grua_usada" class="form-control"
+                                           value="{{ task_info.grua_usada }}"
+                                           id="grua_usada"/>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="status" class="control-label">Status</label>
+                                    <select name="status" class="form-control select-default" id="status">
+                                        {% for status in status_list %}
+                                            <option value="{{ status.value }}"{% if task_info.status is not null and task_info.status == status.value %} selected{% endif %}>{{ status.text|raw }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-6">
+                                    <label for="titulo" class="control-label">Titulo del trabajo</label>
+                                    <input type="text" name="titulo" class="form-control"
+                                           value="{{ task_info.titulo }}"
+                                           id="titulo"/>
+                                </div>
+                            </div>
+
+                            <h3>Datos Inciales</h3>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-6">
+                                    <label for="nivel_estatico" class="control-label">Nivel Estático (m)</label>
+                                    <input type="text" name="nivel_estatico" class="form-control"
+                                           value="{{ task_info.nivel_estatico }}"
+                                           id="nivel_estatico"/>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="profundidad_inicial" class="control-label">Profundidad Inicial (m)</label>
+                                    <input type="text" name="profundidad_inicial" class="form-control"
+                                           value="{{ task_info.profundidad_inicial }}"
+                                           id="profundidad_inicial"/>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class=" panel-heading">
+                                    <div class="form-group">
+                                        <label for="limpieza" class="col-sm-3 control-label">Limpieza de Pozo</label>
+
+                                        <div class="col-sm-9">
+                                            <label class="checkbox-inline">
+                                                <input type="radio" name="limpieza"
+                                                       value="1"{% if task_info.limpieza_pozo is not null and task_info.limpieza_pozo|length > 0 %} checked{% endif %}/>
+                                                Si
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="radio" name="limpieza"
+                                                       value="0"{% if task_info.limpieza_pozo is not null and task_info.limpieza_pozo|length == 0 or not edit_mode %} checked{% endif %}/>
+                                                No
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="panel-body" id="opt-limpieza">
+                                    {% include 'well-new-task-opt-1.twig' %}
+                                </div>
+
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class=" panel-heading">
+                                    <div class="form-group">
+                                        <label for="bomba_extraida" class="col-sm-3 control-label">Bomba
+                                            Extraida</label>
+
+                                        <div class="col-sm-9">
+                                            <label class="checkbox-inline">
+                                                <input type="radio" name="bomba_extraida"
+                                                       value="1"{% if task_info.bomba_extraida is not null and task_info.bomba_extraida == 1 %} checked{% endif %} />
+                                                Si
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="radio" name="bomba_extraida"
+                                                       value="0"{% if task_info.bomba_extraida is not null and task_info.bomba_extraida == 0 or not edit_mode %} checked{% endif %}/>
+                                                No
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="panel-body" id="opt-bomba-extraida">
+                                    {% set prefix = 's1_' %}
+                                    {% include 'well-new-task-opt-2.twig' %}
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class=" panel-heading">
+                                    <div class="form-group">
+                                        <label for="bomba_instalada" class="col-sm-3 control-label">Bomba
+                                            Instalada</label>
+
+                                        <div class="col-sm-9">
+                                            <label class="checkbox-inline">
+                                                <input type="radio" name="bomba_instalada"
+                                                       value="1"{% if task_info.bomba_instalada is not null and task_info.bomba_instalada == 1 %} checked{% endif %}/>
+                                                Si
+                                            </label>
+
+                                            <label class="checkbox-inline">
+                                                <input type="radio" name="bomba_instalada"
+                                                       value="0"{% if task_info.bomba_instalada is not null and task_info.bomba_instalada == 0 or not edit_mode %} checked{% endif %}/>
+                                                No
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="panel-body" id="opt-bomba-instalada">
+                                    {% set prefix = 's2_' %}
+                                    {% include 'well-new-task-opt-2.twig' %}
+                                    {% include 'well-new-task-opt-3.twig' %}
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class=" panel-heading">
+                                    <div class="form-group">
+                                        <label for="prueba_bombeo" class="col-sm-3 control-label">Prueba de
+                                            Bombeo</label>
+
+                                        <div class="col-sm-9">
+                                            <label class="checkbox-inline">
+                                                <input type="radio" name="prueba_bombeo"
+                                                       value="1"{% if task_info.prueba_bombeo is not null and task_info.prueba_bombeo|length > 0 %} checked{% endif %}/>
+                                                Si
+                                            </label>
+
+                                            <label class="checkbox-inline">
+                                                <input type="radio" name="prueba_bombeo"
+                                                       value="0"{% if task_info.prueba_bombeo is not null and task_info.prueba_bombeo|length == 0 or not edit_mode %} checked{% endif %}/>
+                                                No
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="panel-body" id="opt-prueba-bombeo">
+                                    {% include 'well-new-task-opt-4.twig' %}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="observaciones" class="col-sm-3 control-label">Observaciones y Material
+                                    Dañado</label>
+
+                                <div class="col-sm-9">
+            <textarea name="observaciones" id="observaciones"
+                      class="form-control">{{ task_info.observaciones|raw }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12 text-center">
+                                    <button type="button" onclick="history.back()" class="btn btn-default btn-action"><i
+                                                class="fa fa-arrow-left"></i>
+                                        Volver Atr&aacute;s
+                                    </button>
+                                    {% if not edit_mode %}
+                                        <button name="act-create-task" class="btn btn-primary btn-action"
+                                                id="act-create-task"><i
+                                                    class="fa fa-share-square-o"></i> Registrar Trabajo
+                                        </button>
+                                    {% else %}
+                                        <button name="act-edit-task" class="btn btn-primary btn-action"
+                                                id="act-edit-task"
+                                                data-taskid="{{ task_id }}"><i class="fa fa-share-square-o"></i> Guardar
+                                            Cambios
+                                        </button>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+    <div class="clear"></div>
+</div>
+
+{% include 'footer.twig' %}

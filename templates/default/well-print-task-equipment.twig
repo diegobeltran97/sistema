@@ -1,0 +1,325 @@
+{% if prefix == 's1_' %}
+    {% set bomba = extraccion_bomba %}
+    {% set motor = extraccion_motor %}
+    {% set acc = extraccion_acc %}
+{% elseif prefix == 's2_' %}
+    {% set bomba = instalacion_bomba %}
+    {% set motor = instalacion_motor %}
+    {% set acc = instalacion_acc %}
+{% endif %}
+
+{% if bomba.tipo == 1 %}
+    <!-- ####################### SUMERGIBLE ####################### -->
+    <div class="row">
+        <div class="col-sm-4">
+            <p><strong>Tipo de Bomba: </strong>Sumergible</p>
+        </div>
+    </div>
+
+    <div class="tipo_bomba opt-sumergible" style="padding-left:0;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Bomba Sumergible</h3>
+            </div>
+            <div class="panel-body">
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p><strong>Modelo: </strong>{{ bomba.modelo|raw }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>Marca: </strong>{{ bomba.marca|raw }}</p>
+                    </div>
+
+
+                    <div class="col-sm-12">
+                        <p><strong>Etapas: </strong>{{ bomba.etapas|raw }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>Serial: </strong>{{ bomba.serial|raw }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tipo_bomba opt-sumergible" style="padding-left:0;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Motor Sumergible</h3>
+            </div>
+            <div class="panel-body">
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p><strong>Marca: </strong>{{ attribute( motor, prefix ~ 'tipo1_marca_motor') }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>Diam. Motor: </strong>{{ attribute( motor, prefix ~ 'tipo1_diam_motor') }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>NEMA: </strong>{{ attribute( motor, prefix ~ 'tipo1_nema_motor') }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>Hp: </strong>{{ attribute( motor, prefix ~ 'tipo1_hp_motor') }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>Voltaje: </strong>{{ attribute( motor, prefix ~ 'tipo1_voltaje_motor') }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>Amp. Nominal: </strong>{{ attribute( motor, prefix ~ 'tipo1_amp_nominal_motor') }}
+                        </p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>Amp. Max: </strong>{{ attribute( motor, prefix ~ 'tipo1_amp_max_motor') }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>Fases: </strong>{{ attribute( motor, prefix ~ 'tipo1_fases_motor') }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>RPM: </strong>{{ attribute( motor, prefix ~ 'tipo1_rpm_motor') }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>Serial: </strong>{{ attribute( motor, prefix ~ 'tipo1_serial_motor') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tipo_bomba opt-sumergible" style="padding-left:0; padding-right: 0">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Accesorios</h3>
+            </div>
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p><strong>Cant. Tubos: </strong>{{ attribute( acc, prefix ~ 'tipo1_cant_tubos0_acc') }} x
+                            ({{ attribute( acc, prefix ~ 'tipo1_long_tubos0_acc') }}m)</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><strong>Diam.: </strong>{{ attribute( acc, prefix ~ 'tipo1_diam_tubos0_acc') }}</p>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <p><strong>Cant. Tubos: </strong>{{ attribute( acc, prefix ~ 'tipo1_cant_tubos1_acc') }} x
+                            ({{ attribute( acc, prefix ~ 'tipo1_long_tubos1_acc') }}m)</p>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <p><strong>Diam.: </strong>{{ attribute( acc, prefix ~ 'tipo1_diam_tubos1_acc') }}</p>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <p><strong>Cable #: </strong>{{ attribute( acc, prefix ~ 'tipo1_cable_n_acc') }}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p><strong>Tipo: </strong>{{ attribute( acc, prefix ~ 'tipo1_tipo_cable_acc') }}</p>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <p><strong>Long.: </strong>{{ attribute( acc, prefix ~ 'tipo1_long_cable_acc') }}</p>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <p><strong>Líneas: </strong>{{ attribute( acc, prefix ~ 'tipo1_lineas_cable_acc') }}</p>
+                    </div>
+
+                    <div class="col-sm-7">
+                        <p><strong>Nro de Check: </strong>{{ attribute( acc, prefix ~ 'tipo1_nro_check0_acc') }}</p>
+                    </div>
+
+                    <div class="col-sm-5">
+                        <p><strong>Diam.: </strong>{{ attribute( acc, prefix ~ 'tipo1_diam_check0_acc') }}</p>
+                    </div>
+
+                    <div class="col-sm-7">
+                        <p><strong>Nro de Check: </strong>{{ attribute( acc, prefix ~ 'tipo1_nro_check1_acc') }}</p>
+                    </div>
+
+                    <div class="col-sm-5">
+                        <p><strong>Diam.: </strong>{{ attribute( acc, prefix ~ 'tipo1_diam_check1_acc') }}</p>
+                    </div>
+                    <div class="col-sm-12">
+                        <p><strong>Cable Sonda #: </strong>{{ attribute( acc, prefix ~ 'tipo1_cable_sonda_acc') }}</p>
+                    </div>
+                    <div class="col-sm-12">
+                        <p><strong>Cant. de
+                                Electrodos: </strong>{{ attribute( acc, prefix ~ 'tipo1_cant_electrodos_acc') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+{% elseif bomba.tipo == 2 %}
+    <!-- ####################### TURBINA ####################### -->
+    <div class="row">
+        <div class="col-sm-4">
+            <p><strong>Tipo de Bomba: </strong>Turbina</p>
+        </div>
+
+    </div>
+    <div class="tipo_bomba opt-turbina" style="padding-left:0;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Bomba Turbina</h3>
+            </div>
+            <div class="panel-body">
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p><strong>Modelo: </strong>{{ bomba.modelo|raw }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>Marca: </strong>{{ bomba.marca|raw }}</p>
+                    </div>
+
+
+                    <div class="col-sm-12">
+                        <p><strong>Etapas: </strong>{{ bomba.etapas|raw }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>Serial: </strong>{{ bomba.serial|raw }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tipo_bomba opt-turbina" style="padding-left:0;">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                {% if attribute( motor, prefix ~ 'tipo_motor') == 1 %}
+                    <h3 class="motor_type_title">Motor Eléctrico</h3>
+                {% else %}
+                    <h3 class="motor_type_title">Motor Diesel</h3>
+                {% endif %}
+            </div>
+
+            <div class="panel-body">
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p><strong>Marca: </strong>{{ attribute( motor, prefix ~ 'tipo2_marca_motor') }}</p>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <p><strong>Hp: </strong>{{ attribute( motor, prefix ~ 'tipo2_hp_motor') }}</p>
+                    </div>
+                    {% if attribute( motor, prefix ~ 'tipo_motor') == 1 %}
+                        <div class="col-sm-12">
+                            <p><strong>Voltaje: </strong>{{ attribute( motor, prefix ~ 'tipo2_voltaje_motor') }}</p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <p><strong>Amp.
+                                    Nominal: </strong>{{ attribute( motor, prefix ~ 'tipo2_amp_nominal_motor') }}
+                            </p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <p><strong>Amp. Max: </strong>{{ attribute( motor, prefix ~ 'tipo2_amp_max_motor') }}</p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <p><strong>Fases: </strong>{{ attribute( motor, prefix ~ 'tipo2_fases_motor') }}</p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <p><strong>RPM: </strong>{{ attribute( motor, prefix ~ 'tipo2_rpm_motor') }}</p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <p><strong>Serial: </strong>{{ attribute( motor, prefix ~ 'tipo2_serial_motor') }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="tipo_bomba opt-turbina" style="padding-left:0; padding-right: 0">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Accesorios</h3>
+            </div>
+
+            <div class="panel-body">
+
+
+                <h5 class="separator">Columnas</h5>
+
+                <!-- div class="row">
+                    <div class="col-sm-6">
+                        <p><strong>Fases: </strong>{{ attribute( acc, prefix ~ 'cant_columnas_acc') }}</p>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <p><strong>Diametro: </strong>{{ attribute( acc, prefix ~ 'diam_columnas_acc') }}</p>
+                    </div>
+                </div -->
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p><strong>Diam. Tubo Funda: </strong>{{ attribute( acc, prefix ~ 'tipo2_diam_tubo_funda_acc') }}</p>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <p><strong>Diam. Eje: </strong>{{ attribute( acc, prefix ~ 'tipo2_diam_eje_acc') }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p><strong>Diam. Colador: </strong>{{ attribute( acc, prefix ~ 'tipo2_diam_colador_acc') }}</p>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <p><strong>Diam. Descarga: </strong>{{ attribute( acc, prefix ~ 'tipo2_diam_descarga_acc') }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p><strong>Tipo Cabezal: </strong>{{ attribute( acc, prefix ~ 'tipo2_tipo_cabezal_acc') }}</p>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <p><strong>Diam. Cabezal: </strong>{{ attribute( acc, prefix ~ 'tipo2_diam_cabezal_acc') }}</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+{% endif %}

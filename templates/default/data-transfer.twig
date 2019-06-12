@@ -1,0 +1,72 @@
+{% include 'header.twig' %}
+
+{% include 'mainmenu.twig' %}
+
+<div id="content">
+    <div id="content-body">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h1 class="page-header"><i class="icon fa fa-retweet"></i> Importar Datos</h1>
+
+                {{ msg|raw }}
+                {% if show_form %}
+                    <p>Puede descargar el formato del archivo .CSV desde el siguiente <a href="{{ site_url }}includes/data.csv">enlace</a>.</p><br />
+                    <form enctype="multipart/form-data" action="data-transfer.php" class="form-horizontal"
+                          method="post">
+
+
+                        <!--div class="form-group">
+                            <label for="users_per_page" class="col-sm-3 control-label">Operación a Realizar</label>
+
+                            <div class="col-sm-7">
+                                <select name="default_theme" class="form-control select-default" id="default_theme">
+                                    <option value="1">Importar</option>
+                                    <option value="2">Exportar</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label for="users_per_page" class="col-sm-3 control-label">Tipo de Elemento</label>
+
+                            <div class="col-sm-7">
+                                <select name="default_theme" class="form-control select-default" id="default_theme">
+                                    <option value="1">Clientes</option>
+                                    <option value="2">Pozos</option>
+                                    <option value="3">Trabajos</option>
+                                </select>
+                            </div>
+                        </div-->
+
+
+                        <div class="form-group">
+                            <label for="users_per_page" class="col-sm-3 control-label">Archivo *.CSV</label>
+
+                            <div class="col-sm-7">
+                                <input name="uploadedfile" type="file"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-12 text-center">
+
+
+                                <button type="submit" name="act-import-data" class="btn btn-primary btn-action"
+                                        id="act-import-data"><i class="fa fa-share-square-o"></i> Importar Datos
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+{% include 'footer.twig' %}

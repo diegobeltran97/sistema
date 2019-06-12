@@ -1,0 +1,154 @@
+{% if show_form %}
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>{{ site_name }} | Sistema de Administración de Pozos</title>
+
+        <link rel="stylesheet" href="{{ template_url }}/css/reset.css" type="text/css">
+
+        {{ head|raw }}
+
+        <link rel="stylesheet" href="{{ template_url }}/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ template_url }}/css/bootstrap-theme.min.css">
+        <script src="{{ template_url }}/js/bootstrap.min.js"></script>
+
+        <link href="{{ template_url }}/css/select2.css" rel="stylesheet"/>
+        <link href="{{ template_url }}/css/select2-bootstrap.css" rel="stylesheet"/>
+        <script src="{{ template_url }}/js/select1.js"></script>
+        <script src="{{ template_url }}/js/select2.js"></script>
+        <script src="{{ template_url }}/js/select2_locale_es.js"></script>
+
+        <link rel="stylesheet" href="{{ template_url }}/stylesheet.css?v=2" type="text/css">
+        <link rel="stylesheet" href="{{ template_url }}/css/print.css?v=2" type="text/css">
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("select:not(.select1, .select-default)").select2();
+                $("select.select1").select1();
+                $(document).tooltip({selector: '[data-toggle="tooltip"]'});
+            });
+        </script>
+
+    </head>
+
+    <body>
+    <div id="wrapcontent">
+
+        {% if well_info %}
+
+            <div class="text-right no-print" style="margin: 10px 0;">
+                <button class="btn btn-primary btn-sm" data-toggle="tooltip" title="Imprimir"
+                        onclick="window.print(); return false;"
+                        data-placement="bottom"><i class="fa fa-print"></i> Imprimir
+                </button>
+
+            </div>
+
+        {% endif %}
+
+        <div id="content" style="padding: 0;">
+            <div id="content-body">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+
+                        <h4>Detalles del Pozo </h4>
+                    </div>
+
+                    <div class="panel-body">
+
+                        {% if well_info %}
+
+                            <div class="row">
+                                <div class="col-sm-5">
+
+                                    <p class="side-padding customer-name"><strong>Cliente:</strong>
+                                        <a>{{ well_info.cliente|raw }}</a>
+                                    </p>
+
+                                    <p class="side-padding headquarter-name"><strong>Sede:</strong>
+                                        <a>{{ well_info.nombre_sede|raw }}</a>
+                                    </p>
+
+                                    {% if customer_names %}
+                                        <p class="side-padding"><strong>Nombres Previos del Cliente:</strong>
+                                            {{ customer_names|raw }}
+                                        </p>
+                                    {% endif %}
+
+                                    <p class="side-padding"><strong>Nombre del Pozo:</strong> {{ well_info.nombre|raw }}
+                                    </p>
+
+                                    <p class="side-padding"><strong>Fecha de
+                                            Construcción:</strong> {{ well_info.fecha_construccion }}</p>
+                                </div>
+
+                                <div class="col-sm-7">
+
+
+                                    <p class="side-padding"><strong>Dirección:</strong> {{ well_info.direccion|raw }}
+                                    </p>
+
+                                    <p class="pull-left side-padding">
+                                        <strong>Estado:</strong> {{ well_info.nombre_estado|raw }}
+                                    </p>
+
+                                    <p class="pull-left side-padding">
+                                        <strong>Municipio:</strong> {{ well_info.nombre_municipio|raw }}</p>
+
+                                    <p class="side-padding"><strong>Ciudad:</strong> {{ well_info.nombre_ciudad|raw }}
+                                    </p>
+
+                                    <p class="pull-left side-padding"><strong>Coord. N:</strong> {{ well_info.coord_n }}
+                                    </p>
+
+                                    <p class="side-padding"><strong>Coord. E:</strong> {{ well_info.coord_e }}</p>
+
+                                    <p class="pull-left side-padding">
+                                        <strong>Diametro:</strong> {{ well_info.diametro }}”</p>
+
+                                    <p class="pull-left side-padding">
+                                        <strong>Profundidad:</strong> {{ well_info.profundidad }}m
+                                    </p>
+
+                                    <p class="side-padding">
+                                        <strong>Material:</strong> {{ well_info.material|raw }}
+                                    </p>
+                                    <p class="side-padding">
+                                        <strong>Construido por
+                                            Parko:</strong> {% if well_info.por_parko == "1" %}SI{% elseif well_info.por_parko == "0" %}NO{% else %}{% endif %}
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p class="side-padding"><strong>Descripción y/o
+                                            Detalles:</strong> {{ well_info.descripcion|raw }}
+                                    </p>
+                                </div>
+                            </div>
+                        {% else %}
+                            {{ msg|raw }}
+                        {% endif %}
+                    </div>
+                </div>
+                {% if well_info %}
+                    {% if task_info %}
+                        {% set task = task_info %}
+                        {% include 'well-print-task.twig' %}
+                    {% else %}
+                        <div class="alert alert-warning">No se ha encontrado el trabajo especificado.</div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    </body>
+    </html>
+{% else %}
+    No tiene permisos suficientes para acceder.
+{% endif %}

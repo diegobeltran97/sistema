@@ -1,0 +1,124 @@
+{% include 'header.twig' %}
+
+{% include 'mainmenu.twig' %}
+
+<div id="content">
+    <div id="content-body">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h1 class="page-header"><i class="icon fa fa-cogs"></i> Configuración General</h1>
+                {{ msg|raw }}
+                {% if show_form %}
+                    <form class="form-horizontal">
+
+                        <h3>Ajustes Básicos</h3>
+
+                        <div class="form-group">
+
+                            <div class="col-sm-6">
+                                <label for="site_name" class="control-label">Nombre a Mostrar</label>
+                                <input type="text" name="site_name" class="form-control" value="{{ options.site_name }}"
+                                       id="site_name"/>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="email_from" class="control-label">Remitente de Correos</label>
+                                <input type="text" name="email_from" class="form-control"
+                                       value="{{ options.email_from }}"
+                                       id="email_from"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+
+                            <div class="col-sm-6">
+                                <label for="root_path" class="control-label">Directorio de Instalación</label>
+                                <input type="text" name="root_path" class="form-control" value="{{ options.root_path }}"
+                                       id="root_path" disabled/>
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <label for="default_theme" class="control-label">Tema Predeterminado</label>
+                                <select name="default_theme" class="form-control" id="default_theme">
+                                    {% for theme in theme_list %}
+                                        <option value="{{ theme|raw }}"
+                                                {% if theme == options.default_theme %}
+                                                    selected
+                                                {% endif %}
+                                                >{{ theme|raw }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <h3>Paginación</h3>
+
+                        <div class="form-group">
+
+                            <div class="col-sm-6">
+                                <label for="wells_per_page" class="control-label">Cant. de Pozos por Página</label>
+                                <input type="text" name="wells_per_page" class="form-control numeric-int" maxlength="3"
+                                       value="{{ options.wells_per_page }}" id="wells_per_page"/>
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <label for="customers_per_page" class="control-label">Cant. de Clientes por
+                                    Página</label>
+                                <input type="text" name="customers_per_page" class="form-control numeric-int"
+                                       maxlength="3" value="{{ options.customers_per_page }}"
+                                       id="customers_per_page"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-sm-6">
+                                <label for="users_per_page" class="control-label">Cant. de Usuarios por Página</label>
+                                <input type="text" name="users_per_page" class="form-control numeric-int" maxlength="3"
+                                       value="{{ options.users_per_page }}"
+                                       id="users_per_page"/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <!--h3>Otras Configuraciones</h3>
+
+                    <div class="form-group">
+                        <div class="col-sm-7">
+                            <label class="checkbox-inline"><input name="deny_delete_customers" type="checkbox" value="1"{% if options.deny_delete_customers %} checked{% endif %} /> Denegar eliminación de <strong>Clientes / Sedes</strong> con
+                                <strong>pozos</strong> activos</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <label class="checkbox-inline"><input name="deny_delete_wells" type="checkbox" value="1"{% if options.deny_delete_wells %} checked{% endif %} /> Denegar eliminación de <strong>Pozos</strong> con
+                                <strong>trabajos</strong> activos</label>
+                        </div>
+                    </div>
+                    <br /-->
+                        <div class="form-group">
+                            <div class="col-sm-12" style="text-align: center">
+
+                                <button type="button" onclick="history.back()" class="btn btn-default btn-action"><i class="fa fa-arrow-left"></i>
+                                    Volver Atr&aacute;s
+                                </button>
+                                <button name="act-save-adjustments" class="btn btn-primary btn-action"
+                                        id="act-save-adjustments"><i class="fa fa-share-square-o"></i> Guardar Cambios
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+{% include 'footer.twig' %}

@@ -1,0 +1,91 @@
+{% include 'header.twig' %}
+
+{% include 'mainmenu.twig' %}
+
+<div id="content">
+    <div id="content-body">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h1 class="page-header"><i class="icon fa fa-edit"></i> Detalles del Cliente</h1>
+
+                {{ msg|raw }}
+
+                {% if show_form and customer_info %}
+                    <p><strong>ID Cliente:</strong> {{ customer_info.cliente_id }}</p>
+                    <p><strong>Razón Social Actual:</strong> {{ customer_info.razon_social|raw }}</p>
+                    <p><strong>Cant. Pozos / Trabajos Realizados:</strong> {{ customer_info.pozos_realizados }}
+                        Pozo{% if customer_info.pozos_realizados != 1 %}s{% endif %}
+                        / {{ customer_info.trabajos_realizados }} Trabajo{% if customer_info.trabajos_realizados != 1 %}s{% endif %}</p>
+                    <form class="form-horizontal">
+
+
+                        <table class="table">
+                            <tr>
+                                <th><strong>Razón Social</strong></th>
+                                <th><strong>Desde</strong></th>
+                                <th width="16%"><strong>Opciones</strong></th>
+                            </tr>
+                            {% for cliente_nombre in customer_names %}
+
+                                <tr {% if cliente_nombre.actual == 1 %} class="info" {% endif %} >
+                                    <td>{{ cliente_nombre.razon_social|raw }}</td>
+                                    <td>{{ cliente_nombre.fecha_asignacion|raw }}</td>
+                                    <td>
+                                        <a class="btn btn-primary btn-list act-customername-edit" data-customernameid="{{ cliente_nombre.razon_id }}" data-toggle="tooltip" title="Editar" {% if '2-3' not in current_userinfo.access %} disabled {% endif %}><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-info btn-list act-customername-set" data-customernameid="{{ cliente_nombre.razon_id }}" data-toggle="tooltip" title="Establecer como Actual"{% if '2-3' not in current_userinfo.access or cliente_nombre.actual == 1 %} disabled {% endif %}><i class="fa fa-check"></i></a>
+                                        <a class="btn btn-danger btn-list act-customername-delete" data-customernameid="{{ cliente_nombre.razon_id }}" data-toggle="tooltip" title="Eliminar"{% if '2-3' not in current_userinfo.access or cliente_nombre.actual == 1 %} disabled {% endif %}><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                        </table>
+
+                        <h2>Sedes</h2>
+
+                        <table class="table">
+                            <tr>
+                                <th><strong>ID</strong></th>
+                                <th width="40%"><strong>Nombre de la Sede</strong></th>
+                                <th><strong>Info.</strong></th>
+                                <th width="14%"><strong>Opciones</strong></th>
+                            </tr>
+                            {% for sede in customer_sedes %}
+
+                                <tr>
+                                    <td class="headquarter-id">{{ sede.sede_id }}</td>
+                                    <td class="headquarter-name">{{ sede.nombre|raw }}</td>
+                                    <td class="headquarter-info">{{ sede.info|raw }}</td>
+                                    <td class="headquarter-actions" width="16%">
+                                        <a class="btn btn-primary btn-list act-headquarter-edit" data-headquarterid="{{ sede.sede_id }}" data-toggle="tooltip" title="Editar"{% if '2-3' not in current_userinfo.access %} disabled {% endif %}><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-info btn-list act-headquarter-names" data-headquarterid="{{ sede.sede_id }}" data-toggle="tooltip" title="Ver Histórico de Nombres" {%  if '2-3' not in current_userinfo.access %} disabled {% endif %}><i class="fa fa-file-text"></i></a>
+                                        <a class="btn btn-warning btn-list act-headquarter-move" data-headquarterid="{{ sede.sede_id }}" data-toggle="tooltip" title="Mover"{% if '2-3' not in current_userinfo.access %} disabled {% endif %}><i class="fa fa-stack-overflow"></i></a>
+                                        <a class="btn btn-danger btn-list act-headquarter-delete" data-headquarterid="{{ sede.sede_id }}" data-toggle="tooltip" title="Eliminar" {%  if '2-3' not in current_userinfo.access or customer_sedes|length == 1 %} disabled {% endif %}><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                        </table>
+
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <a class="btn btn-default btn-block" id="window-create-name" customerid="{{ customer_info.cliente_id }}"{% if '2-3' not in current_userinfo.access %} disabled {% endif %}>Nueva Razón Social</a>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <a class="btn btn-default btn-block" id="window-add-headquarter" customerid="{{ customer_info.cliente_id }}"{% if '2-3' not in current_userinfo.access %} disabled {% endif %}>Agregar Sede</a>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <a class="btn btn-default btn-block" href="{{ site_url }}wells.php?action=search&mode=4&s={{ customer_info.cliente_id }}"{% if '0-1' not in current_userinfo.access %} disabled {% endif %}>Ver Pozos del Cliente</a>
+                            </div>
+                        </div>
+
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+{% include 'footer.twig' %}

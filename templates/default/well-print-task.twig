@@ -1,0 +1,242 @@
+{% set limpieza_pozo =  task.limpieza_pozo %}
+{% set prueba_bombeo =  task.prueba_bombeo %}
+{% set extraccion_bomba =  task.extraccion_bomba %}
+{% set extraccion_motor =  task.extraccion_motor %}
+{% set extraccion_acc =  task.extraccion_acc %}
+{% set instalacion_bomba =  task.instalacion_bomba %}
+{% set instalacion_motor =  task.instalacion_motor %}
+{% set instalacion_acc =  task.instalacion_acc %}
+{% set datos_arranque =  task.datos_arranque %}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="">Datos del Trabajo (ID {{ task.trabajo_id }})</h4>
+    </div>
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-sm-4">
+                <p><strong>Fecha del Trabajo: </strong>{{ task.fecha_trabajo }}</p>
+            </div>
+            <div class="col-sm-8">
+                <p><strong>Titlo del Trabajo: </strong>{{ task.titulo }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <p><strong>Realizado Por: </strong>{{ task.realizado_por }}</p>
+            </div>
+            <div class="col-sm-4">
+                <p><strong>Grua usada: </strong>{{ task.grua_usada }}</p>
+            </div>
+            <div class="col-sm-4">
+                <p><strong>Status: </strong>
+                    {% if task.status %}
+                        Terminado
+                    {% else %}
+                        En Proceso
+                    {% endif %}</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ################################################################### -->
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Datos Inciales</h4>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <p><strong>Nivel Estático (m): </strong>{{ task.nivel_estatico }}</p>
+            </div>
+            <div class="col-sm-4">
+                <p><strong>Profundidad Inicial (m): </strong>{{ task.profundidad_inicial }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ################################################################### -->
+{% if task.limpieza_pozo %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="">Limpieza de Pozo: {% if task.limpieza_pozo %}
+                    Si
+                {% else %}
+                    No
+                {% endif %}</h4>
+        </div>
+        {% if task.limpieza_pozo %}
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p>
+                            <strong>Método Usado: </strong>
+                            {% if 1 in limpieza_pozo.metodo_usado %}- Compresor {% endif %}
+                            {% if 2 in limpieza_pozo.metodo_usado %} - Bomba {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-4">
+                        <p>
+                            <strong>Nivel de Bombeo (m): </strong>
+                            {{ limpieza_pozo.nivel_bombeo }}</p>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <p>
+                            <strong>Profundidad Final: </strong>
+                            {{ limpieza_pozo.profundidad_final }}</p>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <p>
+                            <strong>Caudal Limpieza (l/s): </strong>
+                            {{ limpieza_pozo.caudal }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+{% endif %}
+<!-- ################################################################### -->
+{% if task.bomba_extraida %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="">Bomba Extraída: {% if task.bomba_extraida %}
+                    Si
+                {% else %}
+                    No
+                {% endif %}</h4>
+        </div>
+        {% if task.bomba_extraida %}
+            <div class="panel-body">
+                {% set prefix = 's1_' %}
+                {% include 'well-print-task-equipment.twig' %}
+            </div>
+        {% endif %}
+
+    </div>
+{% endif %}
+<!-- ################################################################### -->
+{% if task.bomba_instalada %}
+    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="">Bomba Instalada: {% if task.bomba_instalada %}
+                Si
+            {% else %}
+                No
+            {% endif %}</h4>
+    </div>
+    {% if task.bomba_instalada %}
+        <div class="panel-body">
+            {% set prefix = 's2_' %}
+            {% include 'well-print-task-equipment.twig' %}
+
+        </div>
+        </div>
+        <div class="panel panel-default">
+        <div class="panel-heading">
+
+            <h4 class="">Datos al Arranque</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <p><strong>Caudal de Arranque (l/s): </strong>{{ datos_arranque.caudal_bomba_instalada }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <p><strong>Voltaje Apagado V L1: </strong>{{ datos_arranque.VA_VL1_bomba_instalada }}</p>
+                </div>
+
+                <div class="col-sm-4">
+                    <p><strong>Voltaje Apagado V L2: </strong>{{ datos_arranque.VA_VL2_bomba_instalada }}</p>
+                </div>
+
+                <div class="col-sm-4">
+                    <p><strong>Voltaje Apagado V L3: </strong>{{ datos_arranque.VA_VL3_bomba_instalada }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <p><strong>Voltaje Encendido VBF1: </strong>{{ datos_arranque.VE_VBF1_bomba_instalada }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <p><strong>Voltaje Encendido VBF2: </strong>{{ datos_arranque.VE_VBF2_bomba_instalada }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <p><strong>Voltaje Encendido VBF3: </strong>{{ datos_arranque.VE_VBF3_bomba_instalada }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <p><strong>Consumo L1 (Amp): </strong>{{ datos_arranque.consumo_L1_bomba_instalada }}</p>
+                </div>
+
+                <div class="col-sm-4">
+                    <p><strong>Consumo L2 (Amp): </strong>{{ datos_arranque.consumo_L2_bomba_instalada }}</p>
+                </div>
+
+                <div class="col-sm-4">
+                    <p><strong>Consumo L3 (Amp): </strong>{{ datos_arranque.consumo_L3_bomba_instalada }}</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    </div>
+{% endif %}
+<!-- ################################################################### -->
+{% if task.prueba_bombeo %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="">Prueba de Bombeo: {% if task.prueba_bombeo %}
+                    Si
+                {% else %}
+                    No
+                {% endif %}</h4>
+        </div>
+        {% if task.prueba_bombeo %}
+            <div class="panel-body">
+                <div class="row">
+
+                    <div class="col-sm-4">
+                        <p><strong>Nivel Estático (m): </strong>{{ prueba_bombeo.nivel_estatico_prueba_bombeo }}</p>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <p><strong>Nivel de Bombeo (m): </strong>{{ prueba_bombeo.nivel_prueba_bombeo }}</p>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <p><strong>Caudal (l/s): </strong>{{ prueba_bombeo.caudal_prueba_bombeo }}</p>
+                    </div>
+
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+{% endif %}
+<!-- ################################################################### -->
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="">Observaciones y Material Dañado</h4>
+    </div>
+    <div class="panel-body">
+        <p class="list-group-item-text">{{ task.observaciones|raw }}</p>
+    </div>
+</div>

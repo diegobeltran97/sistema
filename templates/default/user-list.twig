@@ -1,0 +1,110 @@
+{% include 'header.twig' %}
+
+{% include 'mainmenu.twig' %}
+
+<div id="content">
+
+    <div id="content-body">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <h1 class="page-header"><i class="icon fa fa-users"></i> Listado de Usuarios</h1>
+
+                {{ msg|raw }}
+
+                {% if show_form and user_list %}
+
+                    <div class="row">
+
+                        <div class="col-sm-7">
+                            <ul class="pagination">
+                                <li{% if pagination.current == 1 %} class="disabled"{% endif %}>
+                                    <a href="{{ pagination.previous_url }}">&laquo;</a>
+                                </li>
+                                {% for i in pagination.first..pagination.last %}
+                                    <li{% if i == pagination.current %} class="active"{% endif %}>
+                                        <a href="{{ pagination.url }}{{ i }}">{{ i }}</a>
+                                    </li>
+                                {% endfor %}
+                                <li{% if pagination.current == pagination.total %} class="disabled"{% endif %}>
+                                    <a href="{{ pagination.next_url }}">&raquo;</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-sm-5 text-right">
+                            <p class="pagination">Mostrando {{ first_item }} - {{ last_item }} de {{ total_items }}
+                                registros.</p>
+                        </div>
+
+                    </div>
+
+                    <table class="table1">
+                        <tr>
+                            <th width="7%">Id</th>
+                            <th width="30%">Cedula de Identidad</th>
+                            <th width="39%">Email</th>
+                            <th width="15%">Acceso</th>
+                            <th width="9%">Opciones</th>
+                        </tr>
+
+                        {% for user in user_list %}
+                            <tr>
+                                <td>{{ user.user_id }}</td>
+                                <td>{{ user.cedula }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.access|length }} Permisos</td>
+                                <td>
+                                    <a class="btn btn-primary btn-list act-user-edit" data-userid="{{ user.user_id }}"
+                                       data-access="true" data-toggle="tooltip"
+                                       title="Editar" {% if '3-3' not in current_userinfo.access %} disabled {% endif %}><i
+                                                class="fa fa-edit"></i></a>
+
+                                    <a class="btn btn-danger btn-list act-delete-user" data-toggle="tooltip" data-userid="{{ user.user_id }}"
+                                       title="Eliminar" {% if '3-4' not in current_userinfo.access %} disabled {% endif %}><i
+                                                class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </table>
+
+
+                    <div class="row">
+
+
+                        <div class="col-sm-5">
+                            <p class="pagination">Mostrando {{ first_item }} - {{ last_item }} de {{ total_items }}
+                                registros.</p>
+                        </div>
+
+                        <div class="col-sm-7 text-right">
+                            <ul class="pagination">
+                                <li{% if pagination.current == 1 %} class="disabled"{% endif %}>
+                                    <a href="{{ pagination.previous_url }}">&laquo;</a>
+                                </li>
+                                {% for i in pagination.first..pagination.last %}
+                                    <li{% if i == pagination.current %} class="active"{% endif %}>
+                                        <a href="{{ pagination.url }}{{ i }}">{{ i }}</a>
+                                    </li>
+                                {% endfor %}
+                                <li{% if pagination.current == pagination.total %} class="disabled"{% endif %}>
+                                    <a href="{{ pagination.next_url }}">&raquo;</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+    <div class="clear"></div>
+</div>
+
+{% include 'footer.twig' %}

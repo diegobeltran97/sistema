@@ -1,0 +1,22 @@
+<div id="left-menu-background"></div>
+<div id="left-menu-container">
+
+    <div class="mainmenu">
+        {% for section_name, section in main_menu %}
+            <div class="menu-section">
+
+                <div class="menu-parent"><i
+                            class="icon fa {{ section.icon }}"></i>{{ section_name|raw }}</div>
+
+                <div class="menu-section-container">
+                    <div class="arrow"></div>
+                    <ul class="menu-content">
+                        {% for button in section.content %}
+                            <li><a {{ button.class|raw }} href="{{ button.url }}">&raquo; {{ button.text|raw }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,108 @@
+html {
+    padding-top: 0 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 3px !important;
+    font-size: 10pt !important;
+    font-weight: bold;
+}
+
+body {
+    font-size: 10pt;
+    line-height: 1em;
+    background: #fff !important;
+    font-family: Calibri, sans-serif;
+    -webkit-print-color-adjust: exact;
+}
+
+#wrapcontent {
+    width: 670px;
+    margin: 0 auto;
+}
+
+#content {
+    margin: 0;
+}
+
+.opt-sumergible .row, .opt-turbina .row {
+    margin: 0 -5px;
+}
+
+.panel {
+    margin-bottom: 8px;
+}
+
+.panel .panel-body {
+    padding: 3px !important;
+}
+
+.panel.panel-default {
+    border-color: #A0A0A0;
+}
+
+.panel-default .panel-heading {
+    position: relative;
+    color: #000;
+    text-shadow: none;
+    padding: 2px;
+    border: none;
+    background: #eaeaea;
+}
+
+div {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+p {
+    margin: 0 0 2px;
+}
+
+.col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+    float: left;
+}
+
+.tipo_bomba .panel-body div[class^='col-sm-'], .tipo_bomba .panel-body div[class*=' col-sm-'] {
+    width: auto;
+    display: inline-block;
+    border-right: 1px solid #000;
+    padding: 0 4px;
+}
+
+.tipo_bomba .panel-body div:last-child[class^='col-sm-'], .tipo_bomba .panel-body div:last-child[class*=' col-sm-'] {
+    border-right: none;
+}
+
+.customer-name a {
+    font-size: 1em;
+    font-weight: normal;
+}
+
+@media print {
+    * {-webkit-print-color-adjust:exact;}
+    
+    .no-print {
+        display: none !important;
+
+    }
+
+    div {
+        page-break-inside: avoid;
+    }
+
+    .panel-body {
+        padding: 4px;
+        margin: 0;
+    }
+
+    .side-padding {
+        padding: 0;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    .panel-default .panel-heading {
+        background-color: #eaeaea !important;
+    }
+}
