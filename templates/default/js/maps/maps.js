@@ -7,30 +7,6 @@ var all = true;
 var entryInfoElements;
 var  entryInfoObjects;
 var contentTotal;
-var contentString = '<div class="card">'+ 
-'<div class="card-body">'+ 
-  '<div class="container">'+
-  '<h5 class="card-title text-center">C.A PARKO</h5>'+
-    '<div class="row">'+      
-        '<ul class="list-unstyled">'+
-        '<li><Strong class="font-weight-bold">Cliente: </Strong> Alimentos Toli</li>'+
-        '<li><Strong class="font-weight-bold">Sede: </Strong>Dapibus ac facilisis in</li>'+
-        '<li><Strong class="font-weight-bold" >Sede: </Strong>Dapibus ac facilisis in</li>'+
-        '<li class="text-right class="text-wrap""><button type="button" class="btn btn-info">Info</button></li>'+
-        '</ul>'+
-   
-  '</div>'+
-  '<div class="row">'+
-  '<ul class="list-unstyled">'+
-        '<li><Strong class="font-weight-bold">Direccion:</Strong> Alimentos Toli</li>'+
-        '<li><Strong class="font-weight-bold">Estado:</Strong>Dapibus ac facilisis in</li>'+
-        '<li><Strong class="font-weight-bold">Estado:</Strong></li>'+
-        '</ul>'+
-'</div>'+  
-   
-'</div>'+
-'</div>'+
-'</div>';
 // Initialize and add the map
 
 function content() {
@@ -47,30 +23,33 @@ function content() {
    
 
      contentTotal = entryInfoObjects[0].map( data => { 
-        var contentString2 = '<div class="card " >'+ 
+        var contentString2 = '<div class="card">'+ 
         '<div class="card-body">'+ 
-          '<div class="container">'+
+          '<div class="container" style=" max-width:240px; " >'+
           '<h5 class="card-title">C.A PARKO</h5>'+
             '<div class="row">'+      
                 '<ul class="list-unstyled">'+
-                '<li><Strong class="font-weight-bold text-break">Cliente: </Strong>'+ data.cliente_nombres +'</li>'+
-                '<li><Strong class="font-weight-bold">Sede: </Strong>Dapibus ac facilisis in</li>'+
-                '<li><Strong class="font-weight-bold" >Sede: </Strong>Dapibus ac facilisis in</li>'+
-                '<li><button type="button" class="btn btn-info">Info</button></li>'+
+                '<li><Strong class="font-weight-bold">Cliente: </Strong> ' + data.cliente+ '</li>'+
+                '<li><Strong class="font-weight-bold">Sede: </Strong>'+ data.nombre_sede + '</li>'+
+                '<li><Strong class="font-weight-bold" >Nombre de Pozo </Strong>' + data.nombre+ '</li>'+
+      
+                '<a class="btn btn-primary  btn-details" href="./wells.php?action=details&id='+data.pozo_id+'" target="_blank" >Details</a>'+
                 '</ul>'+
            
           '</div>'+
           '<div class="row">'+
           '<ul class="list-unstyled">'+
-                '<li><Strong class="font-weight-bold">Direccion:</Strong> Alimentos Toli</li>'+
-                '<li><Strong class="font-weight-bold">Estado:</Strong>Dapibus ac facilisis in</li>'+
-                '<li><Strong class="font-weight-bold">Estado:</Strong></li>'+
+                '<li><Strong class="font-weight-bold">Direccion: </Strong>' + data.direccion + '</li>'+
+                '<li><Strong class="font-weight-bold">Estado: </Strong> ' +  data.estado+ '</li>'+
+                '<li><Strong class="font-weight-bold">Ciudad: </Strong> ' + data.nombre_ciudad + ' </li>'+
+                '<li><Strong class="font-weight-bold">Cordenadas:</Strong></li>'+
+                '<li><Strong class="font-weight-bold">Fecha Construccion: </Strong>' + data.fecha_construccion+ '</li>'+
                 '</ul>'+
         '</div>'+  
            
         '</div>'+
         '</div>'+
-        '</div>';
+      '</div>' ; 
         return  contentString2; 
     });
   
@@ -97,117 +76,7 @@ function initMap(location, typeZoom) {
      // Create the map , with the propierties
      map = new google.maps.Map(document.getElementById("map"), {
         zoom: zoom2,
-        center: position,
-        styles:  [
-          {elementType: 'geometry', stylers: [{color: '#ebe3cd'}]},
-          {elementType: 'labels.text.fill', stylers: [{color: '#523735'}]},
-          {elementType: 'labels.text.stroke', stylers: [{color: '#f5f1e6'}]},
-          {
-            featureType: 'administrative',
-            elementType: 'geometry.stroke',
-            stylers: [{color: '#c9b2a6'}]
-          },
-          {
-            featureType: 'administrative.land_parcel',
-            elementType: 'geometry.stroke',
-            stylers: [{color: '#dcd2be'}]
-          },
-          {
-            featureType: 'administrative.land_parcel',
-            elementType: 'labels.text.fill',
-            stylers: [{color: '#ae9e90'}]
-          },
-          {
-            featureType: 'landscape.natural',
-            elementType: 'geometry',
-            stylers: [{color: '#dfd2ae'}]
-          },
-          {
-            featureType: 'poi',
-            elementType: 'geometry',
-            stylers: [{color: '#dfd2ae'}]
-          },
-          {
-            featureType: 'poi',
-            elementType: 'labels.text.fill',
-            stylers: [{color: '#93817c'}]
-          },
-          {
-            featureType: 'poi.park',
-            elementType: 'geometry.fill',
-            stylers: [{color: '#a5b076'}]
-          },
-          {
-            featureType: 'poi.park',
-            elementType: 'labels.text.fill',
-            stylers: [{color: '#447530'}]
-          },
-          {
-            featureType: 'road',
-            elementType: 'geometry',
-            stylers: [{color: '#f5f1e6'}]
-          },
-          {
-            featureType: 'road.arterial',
-            elementType: 'geometry',
-            stylers: [{color: '#fdfcf8'}]
-          },
-          {
-            featureType: 'road.highway',
-            elementType: 'geometry',
-            stylers: [{color: '#f8c967'}]
-          },
-          {
-            featureType: 'road.highway',
-            elementType: 'geometry.stroke',
-            stylers: [{color: '#e9bc62'}]
-          },
-          {
-            featureType: 'road.highway.controlled_access',
-            elementType: 'geometry',
-            stylers: [{color: '#e98d58'}]
-          },
-          {
-            featureType: 'road.highway.controlled_access',
-            elementType: 'geometry.stroke',
-            stylers: [{color: '#db8555'}]
-          },
-          {
-            featureType: 'road.local',
-            elementType: 'labels.text.fill',
-            stylers: [{color: '#806b63'}]
-          },
-          {
-            featureType: 'transit.line',
-            elementType: 'geometry',
-            stylers: [{color: '#dfd2ae'}]
-          },
-          {
-            featureType: 'transit.line',
-            elementType: 'labels.text.fill',
-            stylers: [{color: '#8f7d77'}]
-          },
-          {
-            featureType: 'transit.line',
-            elementType: 'labels.text.stroke',
-            stylers: [{color: '#ebe3cd'}]
-          },
-          {
-            featureType: 'transit.station',
-            elementType: 'geometry',
-            stylers: [{color: '#dfd2ae'}]
-          },
-          {
-            featureType: 'water',
-            elementType: 'geometry.fill',
-            stylers: [{color: '#b9d3c2'}]
-          },
-          {
-            featureType: 'water',
-            elementType: 'labels.text.fill',
-            stylers: [{color: '#92998d'}]
-          }
-        ]
+        center: position
         
       });
         
@@ -217,20 +86,21 @@ function initMap(location, typeZoom) {
         // create an array of markers based on a given "locations" array.
         // The map() method here has nothing to do with the Google Maps API.
       
-      
+      var iconBase = "https://unpkg.com/leaflet@1.3.3/dist/images/marker-icon.png";
         markers = entryInfoObjects[0].map(function( datos) {
-            var lat = parseFloat(datos.coord_e);
-            var lng = parseFloat(datos.coord_n);
+            var lng = parseFloat(datos.coord_e);
+            var lat = parseFloat(datos.coord_n);
             
-            var location = {lat: lat, lng: lng};
+            var location = { lat: lat, lng: lng };
             console.log(location);
             // var marker = new google.maps.LatLng(lat,lng);
             var marker = new google.maps.Marker({
                 position: location,
+                icon: iconBase,
                 map: map
               });
     
-           
+
     
            return marker;
         
